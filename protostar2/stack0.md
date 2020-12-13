@@ -1,6 +1,5 @@
-check aslr: `sysctl -a --pattern "randomize"`
-disable aslr temporarily: `sudo /sbin/sysctl -w kernel.randomize_va_space=0`
-
+check aslr: `sysctl -a --pattern "randomize"`  
+disable aslr temporarily: `sudo /sbin/sysctl -w kernel.randomize_va_space=0`  
 compile with: `-fno-stack-protection` and `-z execstack`
 
 `volatile` is a keyword in C indicating that this variable can change anytime by outside the code and is omitted from compiler optimization.
@@ -14,7 +13,7 @@ compile with: `-fno-stack-protection` and `-z execstack`
 0x08048415 <main+33>:   test   eax,eax
 ```
 
-The integer `modified` is at [esp+0x5c] and is assigned to 0.
+The integer `modified` is at [esp+0x5c] and is assigned to 0.  
 Our buffer is right above it starting at [esp+0x1c]. We can easily verify the size:
 
 ```C
@@ -36,7 +35,8 @@ you have changed the 'modified' variable
 ```
 
 **Note:**
-The print function appends a new line character `0xa` at the end. To avoid this we can use sys.stdout.write()
+
+The print function appends a new line character `0xa` at the end. To avoid this we can `use sys.stdout.write()`:
 
 ```bash
 user@protostar:/opt/protostar/bin$ python -c "print '\x41' * 3" | hexdump -C
@@ -47,6 +47,8 @@ user@protostar:/opt/protostar/bin$ python -c "import sys; sys.stdout.write('\x41
 00000003
 ```
 
-Resources:
+**Resources:**
+
 https://linux-audit.com/linux-aslr-and-kernelrandomize_va_space-setting/
+
 https://docs.python.org/2/library/sys.html#sys.stdout
