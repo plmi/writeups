@@ -13,7 +13,6 @@ PORT      STATE SERVICE    REASON
 8067/tcp  open  infi-async syn-ack ttl 63
 46561/tcp open  unknown    syn-ack ttl 63
 65534/tcp open  unknown    syn-ack ttl 63
-.endOf('month').toDate();
 ```
 
 ## Enumeration
