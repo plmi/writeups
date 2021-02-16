@@ -1,0 +1,3 @@
+200    33B   http://fristi.com:80/beer/index.html
+403   212B   http://fristi.com:80/beer/.html
+200    33B   http://fristi.com:80/beer/./

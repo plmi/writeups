@@ -1,0 +1,28 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: fristi.dirb
+START_TIME: Sun Jan 20 15:44:16 2019
+URL_BASE: http://fristi.com/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://fristi.com/ ----
++ http://fristi.com/cgi-bin/ (CODE:403|SIZE:210)
+==> DIRECTORY: http://fristi.com/images/
++ http://fristi.com/index.html (CODE:200|SIZE:703)
++ http://fristi.com/robots.txt (CODE:200|SIZE:62)
+
+---- Entering directory: http://fristi.com/images/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
+    (Use mode '-w' if you want to scan it anyway)
+
+-----------------
+END_TIME: Sun Jan 20 15:44:29 2019
+DOWNLOADED: 4612 - FOUND: 3

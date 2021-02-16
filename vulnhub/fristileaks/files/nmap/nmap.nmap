@@ -1,0 +1,18 @@
+# Nmap 7.70 scan initiated Sun Jan 20 15:31:00 2019 as: nmap -sC -sV -oA nmap/nmap -v 192.168.8.174
+Nmap scan report for 192.168.8.174
+Host is up (0.00054s latency).
+Not shown: 999 filtered ports
+PORT   STATE SERVICE VERSION
+80/tcp open  http    Apache httpd 2.2.15 ((CentOS) DAV/2 PHP/5.3.3)
+| http-methods: 
+|   Supported Methods: GET HEAD POST OPTIONS TRACE
+|_  Potentially risky methods: TRACE
+| http-robots.txt: 3 disallowed entries 
+|_/cola /sisi /beer
+|_http-server-header: Apache/2.2.15 (CentOS) DAV/2 PHP/5.3.3
+|_http-title: Site doesn't have a title (text/html; charset=UTF-8).
+MAC Address: 08:00:27:A5:A6:76 (Oracle VirtualBox virtual NIC)
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun Jan 20 15:31:12 2019 -- 1 IP address (1 host up) scanned in 11.90 seconds

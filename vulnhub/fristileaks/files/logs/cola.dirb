@@ -1,0 +1,21 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: cola.dirb
+START_TIME: Sun Jan 20 15:56:32 2019
+URL_BASE: http://fristi.com/cola/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://fristi.com/cola/ ----
++ http://fristi.com/cola/index.html (CODE:200|SIZE:33)
+
+-----------------
+END_TIME: Sun Jan 20 15:56:46 2019
+DOWNLOADED: 4612 - FOUND: 1

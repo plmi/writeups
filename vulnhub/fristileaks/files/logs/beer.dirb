@@ -1,0 +1,21 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: beer.dirb
+START_TIME: Sun Jan 20 15:54:57 2019
+URL_BASE: http://fristi.com/beer/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://fristi.com/beer/ ----
++ http://fristi.com/beer/index.html (CODE:200|SIZE:33)
+
+-----------------
+END_TIME: Sun Jan 20 15:55:11 2019
+DOWNLOADED: 4612 - FOUND: 1

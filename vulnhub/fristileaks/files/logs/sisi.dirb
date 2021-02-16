@@ -1,0 +1,21 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: sisi.dirb
+START_TIME: Sun Jan 20 15:57:08 2019
+URL_BASE: http://fristi.com/sisi/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://fristi.com/sisi/ ----
++ http://fristi.com/sisi/index.html (CODE:200|SIZE:33)
+
+-----------------
+END_TIME: Sun Jan 20 15:57:20 2019
+DOWNLOADED: 4612 - FOUND: 1

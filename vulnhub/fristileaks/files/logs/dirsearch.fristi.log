@@ -1,0 +1,7 @@
+403   214B   http://fristi.com:80/fristi/.html
+200   131KB  http://fristi.com:80/fristi/index.php
+200   131KB  http://fristi.com:80/fristi/./
+200     4B   http://fristi.com:80/fristi/uploads/
+302   269B   http://fristi.com:80/fristi/upload.php
+200     0B   http://fristi.com:80/fristi/logout.php
+200   131KB  http://fristi.com:80/fristi/main_login.php

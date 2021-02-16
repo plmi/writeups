@@ -1,0 +1,8 @@
+200   703B   http://fristi.com:80/./
+200   703B   http://fristi.com:80/index.html
+200     1KB  http://fristi.com:80/images/
+403   207B   http://fristi.com:80/.html
+403   210B   http://fristi.com:80/cgi-bin/
+200    67KB  http://fristi.com:80/icons/
+403   208B   http://fristi.com:80/error/
+200    33B   http://fristi.com:80/beer/
