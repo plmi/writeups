@@ -89,10 +89,10 @@ In the end BURP revealed the comment in the `<head>` for me and I got login:
 
 ### File Upload
 
-Read: [Files With Multiple Extensions](http://httpd.apache.org/docs/2.2/mod/mod_mime.html#multipleext)
-Read: [Apache AddHandler/AddType Exploit Protection](https://www.gentoo.org/support/news-items/2015-04-06-apache-addhandler-addtype.html)
+Read: [Files With Multiple Extensions](http://httpd.apache.org/docs/2.2/mod/mod_mime.html#multipleext)  
+Read: [Apache AddHandler/AddType Exploit Protection](https://www.gentoo.org/support/news-items/2015-04-06-apache-addhandler-addtype.html)  
 Read: [Why File Upload Forms are a Major Security Threat](https://www.acunetix.com/websitesecurity/upload-forms-threat/)  
-Read: [HTTP Accept-Ranges](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests) 
+Read: [HTTP Accept-Ranges](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests)  
 
 > The file has been uploaded to /uploads.
 
