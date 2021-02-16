@@ -1,0 +1,14 @@
+# Nmap 7.70 scan initiated Tue Mar 19 16:43:27 2019 as: nmap -T4 -p22,80 -sCV -oN nmap/ports.nmap 10.10.10.150
+Nmap scan report for curling (10.10.10.150)
+Host is up (0.050s latency).
+
+PORT   STATE SERVICE    VERSION
+22/tcp open  tcpwrapped
+| ssh-hostkey: 
+|_  256 9f:0b:c2:b2:0b:ad:8f:a1:4e:0b:f6:33:79:ef:fb:43 (ECDSA)
+80/tcp open  http       Apache httpd 2.4.29 ((Ubuntu))
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Site doesn't have a title (text/html; charset=UTF-8).
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Tue Mar 19 16:43:39 2019 -- 1 IP address (1 host up) scanned in 11.90 seconds

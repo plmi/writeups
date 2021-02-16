@@ -1,0 +1,13 @@
+# Nmap 7.70 scan initiated Tue Mar 19 16:38:36 2019 as: nmap -T4 --max-retries 1 --max-scan-delay 20 --defeat-rst-ratelimit --open -oN nmap/quick.nmap -vv 10.10.10.150
+Nmap scan report for curling (10.10.10.150)
+Host is up, received echo-reply ttl 63 (0.053s latency).
+Scanned at 2019-03-19 16:38:36 EDT for 2s
+Not shown: 892 closed ports, 106 filtered ports
+Reason: 892 resets and 106 no-responses
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT   STATE SERVICE REASON
+22/tcp open  ssh     syn-ack ttl 63
+80/tcp open  http    syn-ack ttl 63
+
+Read data files from: /usr/bin/../share/nmap
+# Nmap done at Tue Mar 19 16:38:38 2019 -- 1 IP address (1 host up) scanned in 2.20 seconds
