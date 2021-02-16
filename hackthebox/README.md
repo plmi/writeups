@@ -3,5 +3,5 @@
 | Machine |
 | --- |
 | [Curling](./curling/writeup.md) |
-| [Irked](./Irked/writeup.md) |
+| [Irked](./irked/writeup.md) |
 
