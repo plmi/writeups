@@ -1,6 +1,6 @@
 # FristiLeaks 1.3
 
-### Reconnaissance
+## Reconnaissance
 
 `$ arp-scan -I eth0 -l | grep :76 | awk '{print $1}'`
 
