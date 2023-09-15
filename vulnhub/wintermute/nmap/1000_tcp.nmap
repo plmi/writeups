@@ -1,0 +1,11 @@
+# Nmap 7.80SVN scan initiated Wed Jan  1 21:11:39 2020 as: nmap -Pn -n -sS -oA nmap/1000_tcp 192.168.10.108
+Nmap scan report for 192.168.10.108
+Host is up (0.000082s latency).
+Not shown: 997 closed ports
+PORT     STATE SERVICE
+25/tcp   open  smtp
+80/tcp   open  http
+3000/tcp open  ppp
+MAC Address: 08:00:27:90:DD:6B (Oracle VirtualBox virtual NIC)
+
+# Nmap done at Wed Jan  1 21:11:39 2020 -- 1 IP address (1 host up) scanned in 0.25 seconds

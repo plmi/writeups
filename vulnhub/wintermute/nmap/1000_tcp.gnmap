@@ -1,0 +1,4 @@
+# Nmap 7.80SVN scan initiated Wed Jan  1 21:11:39 2020 as: nmap -Pn -n -sS -oA nmap/1000_tcp 192.168.10.108
+Host: 192.168.10.108 ()	Status: Up
+Host: 192.168.10.108 ()	Ports: 25/open/tcp//smtp///, 80/open/tcp//http///, 3000/open/tcp//ppp///	Ignored State: closed (997)
+# Nmap done at Wed Jan  1 21:11:39 2020 -- 1 IP address (1 host up) scanned in 0.25 seconds
